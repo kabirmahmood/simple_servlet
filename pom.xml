@@ -4,7 +4,7 @@
   <groupId>com.mycompany.app</groupId>
   <artifactId>my-web-app</artifactId>
   <packaging>war</packaging>
-  <version>7.6-BUILD-SNAPSHOT</version>
+  <version>7.7-BUILD-SNAPSHOT</version>
   <name>my-web-app</name>
   <url>http://maven.apache.org</url>
   <dependencies>
