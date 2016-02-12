@@ -14,7 +14,7 @@ public class SimpleServlet extends HttpServlet {
         Integer sum = Integer.parseInt(a) + Integer.parseInt(b);
 
         PrintWriter out = response.getWriter();
-        out.println( "<h1>SimpleServlet v8.6 - The sum of " + a.toString() + " + " + b.toString() + " = " + sum + "</h2>" );
+        out.println( "<h1>SimpleServlet v8.7 - The sum of " + a.toString() + " + " + b.toString() + " = " + sum + "</h2>" );
         out.flush();
         out.close();
     }
