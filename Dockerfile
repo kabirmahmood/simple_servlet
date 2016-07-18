@@ -1,5 +1,4 @@
-FROM tomcat
-MAINTAINER xyz
+FROM tomcat:8.0
 
 ADD target/my-web-app.war /usr/local/tomcat/webapps/
 
