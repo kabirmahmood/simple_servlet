@@ -15,4 +15,10 @@ node {
         }
  }
 
+stage 'Docker push'
+node {
+        docker.withRegistry("https://253814188284.dkr.ecr.eu-west-1.amazonaws.com", "ecr:kmtest1") {
+            docker.image("kmtest:v1").push('v1a')
+        }
 
+}
