@@ -1,4 +1,4 @@
-def VERSION_TAG=4
+def VERSION_TAG=5
 
 stage 'Build'
 node {
