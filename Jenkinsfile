@@ -1,11 +1,11 @@
-def VERSION_TAG="v3"
+def VERSION_TAG=3
 
 stage 'Build'
 node {
         git url: 'https://github.com/kmahmood-2015/simple-servlet.git'
         def mvnHome = tool 'M3'
         sh "${mvnHome}/bin/mvn -B verify"
-        docker.build 'kmtest:${VERSION_TAG}'
+        docker.build "kmtest:v${VERSION_TAG}"
 }
 
 stage 'Test'
