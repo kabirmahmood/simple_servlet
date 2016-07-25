@@ -10,7 +10,7 @@ stage 'Test'
 node {
         docker.image('kmtest:v1').withRun('-p 8585:8080') {c ->
             sh "sleep 3"
-            sh "curl 'http://localhost:8585/my-web-app/simple?a=4&b=3' | grep 'The sum of 4 + 3 = 7'"
+            sh "curl 'http://192.168.56.103:8585/my-web-app/simple?a=4&b=3' | grep 'The sum of 4 + 3 = 7'"
             input message: "Does http://localhost:8585/my-web-app/simple?a=5&b=6 look good?"
         }
  }
