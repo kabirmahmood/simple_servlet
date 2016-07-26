@@ -1,5 +1,5 @@
 def VERSION_TAG=6
-def SWARM_MASTER_IP="54.194.25.145"
+def SWARM_MASTER_IP='54.194.25.145'
 
 stage 'Build'
 node {
