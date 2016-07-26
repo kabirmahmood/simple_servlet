@@ -1,4 +1,5 @@
 def VERSION_TAG=6
+def SWARM_MASTER_NODE="54.194.25.145"
 
 stage 'Build'
 node {
@@ -30,8 +31,8 @@ stage 'Deploy to Prod'
 
 node {
         sshagent (credentials: ['e7c2cb8b-0be7-44d6-a483-7639b7b53fd5']) {
-            sh "ssh -o StrictHostKeyChecking=no -l ec2-user 54.194.25.145 sudo docker login -u AWS -p $(aws ecr get-authorization-token --region eu-west-1 --output text --query authorizationData[].authorizationToken | base64 -d | cut -d: -f2) -e none https://253814188284.dkr.ecr.eu-west-1.amazonaws.com"
-            sh "ssh -o StrictHostKeyChecking=no -l ec2-user 54.194.25.145 sudo docker service update --image 253814188284.dkr.ecr.eu-west-1.amazonaws.com/kmtest:v${VERSION_TAG} --registry-auth mywebapp"
+            sh "ssh -o StrictHostKeyChecking=no -l ec2-user ${SWARM_MASTER_NODE} sudo docker login -u AWS -p \$(aws ecr get-authorization-token --region eu-west-1 --output text --query authorizationData[].authorizationToken | base64 -d | cut -d: -f2) -e none https://253814188284.dkr.ecr.eu-west-1.amazonaws.com"
+            sh "ssh -o StrictHostKeyChecking=no -l ec2-user ${SWARM_MASTER_NODE} sudo docker service update --image 253814188284.dkr.ecr.eu-west-1.amazonaws.com/kmtest:v${VERSION_TAG} --registry-auth mywebapp"
        }
 }
 
