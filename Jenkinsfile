@@ -1,4 +1,4 @@
-def VERSION_TAG=12
+def VERSION_TAG=13
 def SWARM_MASTER_NODE="54.194.11.220"
 
 stage 'Build'
@@ -19,7 +19,7 @@ node {
         }
  }
 
-stage 'Promote Image'
+stage 'Package'
 node {
         docker.withRegistry("https://253814188284.dkr.ecr.eu-west-1.amazonaws.com", "ecr:kmtest1") {
             docker.image("kmtest:v${VERSION_TAG}").push("v${VERSION_TAG}")
@@ -27,7 +27,7 @@ node {
 
 }
 
-stage 'Deploy to Prod'
+stage 'Deploy'
 
 node {
         sshagent (credentials: ['e7c2cb8b-0be7-44d6-a483-7639b7b53fd5']) {
