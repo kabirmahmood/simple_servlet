@@ -1,7 +1,7 @@
 def VERSION_TAG=13
 def SWARM_MASTER_NODE="54.194.11.220"
 
-stage 'Build'
+stage 'Develop'
 node {
         git url: 'https://github.com/kmahmood-2015/simple-servlet.git'
         def mvnHome = tool 'M3'
