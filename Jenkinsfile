@@ -1,4 +1,4 @@
-def VERSION_TAG=15
+def VERSION_TAG=16
 def SWARM_MASTER_NODE="54.171.89.146"
 
 stage 'Develop'
