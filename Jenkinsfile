@@ -6,7 +6,6 @@ node {
         git url: 'https://github.com/kmahmood-2015/simple-servlet.git'
         def mvnHome = tool 'M3'
         sh "${mvnHome}/bin/mvn -B verify"
-        sh "${mvnHome}/bin/mvn sonar:sonar -Dsonar.host.url=http://192.168.56.101:9000 -Dsonar.jdbc.url=\"jdbc:h2:tcp://192.168.56.101/sonar\""
         docker.build "kmtest:v${VERSION_TAG}"
 }
 
