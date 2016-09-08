@@ -14,8 +14,7 @@ node {
 stage 'Test'
 node {
         docker.image("kmtest:v${VERSION_TAG}").withRun('-p 8585:8080') {c ->
-            sh "sleep 5"
-            sh "curl \$(/sbin/ip route|awk '/default/ { print \$3 }'):8585/'my-web-app/simple?a=14&b=3' | grep 'The sum of 14 + 3 = 17'"
+            sh "sleep 3"
             input message: "Does http://localhost:8585/my-web-app/simple?a=5&b=6 look good?"
         }
  }
