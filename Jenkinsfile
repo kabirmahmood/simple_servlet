@@ -22,7 +22,7 @@ node {
 
 stage 'Package'
 node {
-        docker.withRegistry('https://index.docker.io/v1/', 'creds1') {
+        docker.withRegistry('', 'creds1') {
             docker.image("kmahmood/kmtest:v${VERSION_TAG}").push("v${VERSION_TAG}")
             
         }
