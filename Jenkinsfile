@@ -13,7 +13,7 @@ node {
 
 stage 'Test'
 node {
-        docker.image("kmtest:v${VERSION_TAG}").withRun('-p 8585:8080') {c ->
+        docker.image("kmahmood/kmtest:v${VERSION_TAG}").withRun('-p 8585:8080') {c ->
             sh "sleep 10"
             sh "curl -v '172.17.0.1:8585/my-web-app/simple?a=4&b=3' | grep 'The sum of 4 + 3 = 7'"
             input message: "Does http://192.168.50.4:8585/my-web-app/simple?a=5&b=6 look good?"
@@ -22,7 +22,7 @@ node {
 
 stage 'Package'
 node {
-        docker.withRegistry("", "dkrhub") {
+        docker.withRegistry('', 'dkrhub') {
             docker.image("kmahmood/kmtest:v${VERSION_TAG}").push("v${VERSION_TAG}")
             
         }
