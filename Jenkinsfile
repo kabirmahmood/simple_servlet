@@ -7,7 +7,7 @@ node {
         def mvnHome = tool 'M3'
         sh "${mvnHome}/bin/mvn -B verify"
         sh "${mvnHome}/bin/mvn sonar:sonar -Dsonar.host.url=http://sonar:9000 -Dsonar.jdbc.url=\"jdbc:h2:tcp://sonar/sonar\""
-        docker.build "kmtest:v${VERSION_TAG}"
+        docker.build "kmahmood/kmtest:v${VERSION_TAG}"
 }
 
 
@@ -23,7 +23,7 @@ node {
 stage 'Package'
 node {
         docker.withRegistry("", "dkrhub") {
-            docker.image("kmtest:v${VERSION_TAG}").push("v${VERSION_TAG}")
+            docker.image("kmahmood/kmtest:v${VERSION_TAG}").push("v${VERSION_TAG}")
             
         }
 
