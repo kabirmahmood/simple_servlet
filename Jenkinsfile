@@ -22,7 +22,7 @@ node {
 
 stage 'Package'
 node {
-        docker.withRegistry('https://registry.hub.docker.com/', 'dkrhub') {
+        docker.withRegistry('https://registry.hub.docker.com/', 'creds1') {
             docker.image("kmahmood/kmtest:v${VERSION_TAG}").push("v${VERSION_TAG}")
             
         }
