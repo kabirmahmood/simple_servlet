@@ -22,10 +22,13 @@ node {
 
 stage 'Package'
 node {
-        docker.withRegistry('', 'creds1') {
-            docker.image("kmahmood/kmtest:v${VERSION_TAG}").push("v${VERSION_TAG}")
-            
-        }
+            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dkrhub',
+                            usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                //available as an env variable, but will be masked if you try to print it out any which way
+                sh 'docker login -u $USERNAME -p $PASSWORD'
+                docker.image("kmahmood/kmtest:v${VERSION_TAG}").push("v${VERSION_TAG}")
+            }
+
 
 
 }
