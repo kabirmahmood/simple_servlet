@@ -16,21 +16,25 @@ node {
         docker.image("kmtest:v${VERSION_TAG}").withRun('-p 8585:8080') {c ->
             sh "sleep 10"
             sh "curl -v '172.17.0.1:8585/my-web-app/simple?a=4&b=3' | grep 'The sum of 4 + 3 = 7'"
-            input message: "Does http://localhost:8585/my-web-app/simple?a=5&b=6 look good?"
+            input message: "Does http://192.168.50.4:8585/my-web-app/simple?a=5&b=6 look good?"
         }
  }
 
 stage 'Package'
 node {
-        docker.withRegistry("https://253814188284.dkr.ecr.eu-west-1.amazonaws.com", "ecr:kmtest1") {
+        docker.withRegistry("", "dkrhub") {
             docker.image("kmtest:v${VERSION_TAG}").push("v${VERSION_TAG}")
+            
         }
 
 }
 
+
 stage 'Deploy'
 
 node {
+
+        sh "exit 2"
         sshagent (credentials: ['e7c2cb8b-0be7-44d6-a483-7639b7b53fd5']) {
             sh "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo docker login -u AWS -p \$(aws ecr get-authorization-token --region eu-west-1 --output text --query authorizationData[].authorizationToken | base64 -d | cut -d: -f2) -e none https://253814188284.dkr.ecr.eu-west-1.amazonaws.com"
             sh "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo docker service update --image 253814188284.dkr.ecr.eu-west-1.amazonaws.com/kmtest:v${VERSION_TAG} --with-registry-auth mywebapp"
