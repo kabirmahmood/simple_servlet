@@ -1,4 +1,4 @@
-def VERSION_TAG=16
+def VERSION_TAG=17
 def SWARM_MASTER_NODE="54.194.22.68"
 
 stage 'Develop'
@@ -38,14 +38,9 @@ stage 'Deploy'
 
 node {
 
- withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dkrhub',
-                            usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                //available as an env variable, but will be masked if you try to print it out any which way
         sshagent (credentials: ['swarmkey1']) {
-            sh "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo docker login -u $USERNAME -p $PASSWORD"
-            sh "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo docker service update --image kmahmood/kmtest:v${VERSION_TAG} --with-registry-auth mywebapp"
+            sh "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo -i docker service update --image kmahmood/kmtest:v${VERSION_TAG} --with-registry-auth mywebapp"
        }
-            }
 
 }
 
