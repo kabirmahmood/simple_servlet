@@ -1,4 +1,4 @@
-def VERSION_TAG=17
+def VERSION_TAG=18
 def SWARM_MASTER_NODE="54.229.163.33"
 
 stage 'Develop'
@@ -34,14 +34,37 @@ node {
 }
 
 
-stage 'Deploy'
+
+stage 'Staging'
 
 node {
 
         sshagent (credentials: ['swarmkey1']) {
-            sh "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo -i docker service update --image kmahmood/kmtest:v${VERSION_TAG} --with-registry-auth mywebapp"
+
+            def staging_env = sh (
+                    script: "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo /opt/get_staging_env.sh",
+                    returnStdout: true
+                ).trim()
+
+
+            sh "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo -i docker service update --image kmahmood/kmtest:v${VERSION_TAG} --with-registry-auth ${staging_env}"
        }
+
+
+            input message: "Do you want to switch over STAGING to PROD ?"
+
+
 
 }
 
+
+stage 'Deploy to Production'
+
+node {
+
+        sshagent (credentials: ['swarmkey1']) {
+            sh "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo /opt/switch_staging_to_prod.sh"
+       }
+
+}
 
