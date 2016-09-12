@@ -1,4 +1,4 @@
-def VERSION_TAG=20
+def VERSION_TAG=16
 def SWARM_MASTER_NODE="54.229.163.33"
 
 stage 'Develop'
@@ -28,11 +28,7 @@ node {
                 sh 'docker login -u $USERNAME -p $PASSWORD'
                 docker.image("kmahmood/kmtest:v${VERSION_TAG}").push("v${VERSION_TAG}")
             }
-
-
-
 }
-
 
 
 stage 'Staging'
@@ -46,22 +42,15 @@ node {
                     returnStdout: true
                 ).trim()
 
-
             sh "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo -i docker service update --image kmahmood/kmtest:v${VERSION_TAG} --with-registry-auth ${staging_env}"
        }
 
-
             input message: "Do you want to switch over STAGING to PROD ?"
-
-
-
 }
-
 
 stage 'Deploy to Production'
 
 node {
-
         sshagent (credentials: ['swarmkey1']) {
             sh "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo /opt/switch_staging_to_prod.sh"
        }
