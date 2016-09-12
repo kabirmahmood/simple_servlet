@@ -42,10 +42,17 @@ node {
                     returnStdout: true
                 ).trim()
 
+            def elb_dnsname = sh (
+                    script: "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo /opt/get_elb_dnsname.sh",
+                    returnStdout: true
+                ).trim()
+
+
             sh "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo -i docker service update --image kmahmood/kmtest:v${VERSION_TAG} --with-registry-auth ${staging_env}"
        }
 
-            input message: "Do you want to switch over STAGING to PROD ?"
+            sh "curl -v 'http://${elb_dnsname}:8080/my-web-app/simple?a=4&b=3' | grep 'The sum of 4 + 3 = 7'"
+            input message: "Please check at http://${elb_dnsname}:8080/my-web-app/simple?a=5&b=6 - Do you want to GO-LIVE ?"
 }
 
 stage 'Deploy to Production'
