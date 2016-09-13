@@ -1,4 +1,4 @@
-def VERSION_TAG=16
+def VERSION_TAG=17
 def SWARM_MASTER_NODE="54.229.90.233"
 def ELB_DNSNAME="myelb-334755736.eu-west-1.elb.amazonaws.com"
 
@@ -45,7 +45,8 @@ node {
 
             sh "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo -i docker service update --image kmahmood/kmtest:v${VERSION_TAG} --with-registry-auth ${staging_env}"
        }
-            //sh "curl -v 'http://${ELB_DNSNAME}:8080/my-web-app/simple?a=4&b=3' | grep 'The sum of 4 + 3 = 7'"
+            sh "sleep 10"
+            sh "curl -v 'http://${ELB_DNSNAME}:8080/my-web-app/simple?a=4&b=3' | grep 'The sum of 4 + 3 = 7'"
             input message: "Please check at http://${ELB_DNSNAME}:8080/my-web-app/simple?a=5&b=6 - Do you want to GO-LIVE ?"
 }
 
