@@ -1,4 +1,4 @@
-def VERSION_TAG=17
+def VERSION_TAG=18
 def SWARM_MASTER_NODE="54.229.90.233"
 def ELB_DNSNAME="myelb-334755736.eu-west-1.elb.amazonaws.com"
 
