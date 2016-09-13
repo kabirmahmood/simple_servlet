@@ -1,8 +1,8 @@
-def VERSION_TAG=17
-def SWARM_MASTER_NODE="54.229.63.29"
-def ELB_DNSNAME="MyELB-1951192842.eu-west-1.elb.amazonaws.com"
+def VERSION_TAG=16
+def SWARM_MASTER_NODE="54.229.90.233"
+def ELB_DNSNAME="myelb-334755736.eu-west-1.elb.amazonaws.com"
 
-stage 'Develop'
+stage 'Build'
 node {
         git url: 'https://github.com/kmahmood-2015/simple-servlet.git'
         def mvnHome = tool 'M3'
@@ -43,16 +43,9 @@ node {
                     returnStdout: true
                 ).trim()
 
-         //   def elb_dnsname = sh (
-         //           script: "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo /opt/get_elb_dnsname.sh",
-         //           returnStdout: true
-         //       ).trim()
-
-
             sh "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo -i docker service update --image kmahmood/kmtest:v${VERSION_TAG} --with-registry-auth ${staging_env}"
        }
-
-            //sh "curl -v 'http://${elb_dnsname}:8080/my-web-app/simple?a=4&b=3' | grep 'The sum of 4 + 3 = 7'"
+            //sh "curl -v 'http://${ELB_DNSNAME}:8080/my-web-app/simple?a=4&b=3' | grep 'The sum of 4 + 3 = 7'"
             input message: "Please check at http://${ELB_DNSNAME}:8080/my-web-app/simple?a=5&b=6 - Do you want to GO-LIVE ?"
 }
 
