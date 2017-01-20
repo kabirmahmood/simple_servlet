@@ -1,6 +1,6 @@
-def VERSION_TAG=1
-def SWARM_MASTER_NODE="54.229.90.233"
-def ELB_DNSNAME="myelb-334755736.eu-west-1.elb.amazonaws.com"
+def VERSION_TAG=2
+def SWARM_MASTER_NODE="54.194.2.162"
+def ELB_DNSNAME="docker-swarm-cd-ELB-1973565464.eu-west-1.elb.amazonaws.com"
 
 stage 'Build'
 node {
