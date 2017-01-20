@@ -4,7 +4,7 @@ def ELB_DNSNAME="myelb-334755736.eu-west-1.elb.amazonaws.com"
 
 stage 'Build'
 node {
-        git url: 'https://github.com/kmahmood-2015/simple-servlet.git'
+        git url: 'https://github.com/kabirmahmood/simple-servlet.git'
         def mvnHome = tool 'M3'
         sh "${mvnHome}/bin/mvn -B verify"
         sh "${mvnHome}/bin/mvn sonar:sonar -Dsonar.host.url=http://sonar:9000 -Dsonar.jdbc.url=\"jdbc:h2:tcp://sonar/sonar\""
