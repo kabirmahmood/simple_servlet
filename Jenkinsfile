@@ -15,7 +15,7 @@ node {
 stage 'Test'
 node {
         docker.image("kmahmood/kmtest:v${VERSION_TAG}").withRun('-p 8585:8080') {c ->
-            sh "sleep 10"
+            sh "sleep 20"
             sh "curl -v '172.17.0.1:8585/my-web-app/simple?a=4&b=3' | grep 'The sum of 4 + 3 = 7'"
             input message: "Does http://192.168.50.4:8585/my-web-app/simple?a=5&b=6 look good?"
         }
