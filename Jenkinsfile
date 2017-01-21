@@ -45,7 +45,7 @@ node {
 
             sh "ssh -o StrictHostKeyChecking=no -l ubuntu ${SWARM_MASTER_NODE} sudo -i docker service update --image kmahmood/kmtest:v${VERSION_TAG} --with-registry-auth ${staging_env}"
        }
-            sh "sleep 30"
+            sh "sleep 45"
             sh "curl -v 'http://${ELB_DNSNAME}:8080/my-web-app/simple?a=4&b=3' | grep 'The sum of 4 + 3 = 7'"
             input message: "Please check at http://${ELB_DNSNAME}:8080/my-web-app/simple?a=5&b=6 - Do you want to GO-LIVE ?"
 }
