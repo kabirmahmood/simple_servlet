@@ -1,4 +1,4 @@
-def VERSION_TAG=10
+def VERSION_TAG=11
 def SWARM_MASTER_NODE="54.154.185.33"
 def ELB_DNSNAME="docker-swarm-cd-ELB-1973565464.eu-west-1.elb.amazonaws.com"
 
